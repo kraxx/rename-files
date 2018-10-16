@@ -1,9 +1,10 @@
-NAME =	rename_this
-
-DEPS =	
+NAME = rename_this
 
 OUTPUT_DIR =	./
 OUTPUT_BINARY =	${OUTPUT_DIR}${NAME}
+
+TEST_DIR =		test
+TEST_SCRIPT =	generate20files.sh
 
 RED =				\033[31m
 GREEN =				\033[32m
@@ -21,18 +22,21 @@ GREEN_LIGHT_BLINK =	\033[5;92m
 END_COLOUR =		\033[0m
 
 
-.PHONY: install build serve test clean heroku docker re # invalidate these commands if they exist outside this script
+.PHONY: build windows clean test re # invalidate these commands if they exist outside this script
 .SILENT: # Prepends everything with @ (command executed without printing to stdout)
-all: install build
-install:
-	echo "${YELLOW_LIGHT_BOLD}Installing dependencies${END_COLOUR}"
-	go get ${DEPS}
+all: build
 build:
 	echo "${YELLOW_LIGHT_BOLD}Building binary${END_COLOUR}"
 	go build -o ${OUTPUT_BINARY} -ldflags "-X main.version=$(TAG)" .
+windows:
+	echo "${YELLOW_LIGHT_BOLD}Building binary for ${GREEN_LIGHT_BLINK}WINDOWS${END_COLOUR}"
+	GOOS=windows GOARCH=amd64 go build -o ${OUTPUT_BINARY}.exe -ldflags "-X main.version=$(TAG)" .
+test: build
+	echo "${YELLOW_LIGHT_BOLD}Generating and renaming test files${END_COLOUR}"
+	mkdir -p ${TEST_DIR} && cd ${TEST_DIR} && ../${TEST_SCRIPT} && ../${OUTPUT_BINARY}
 clean:
 	echo "${YELLOW_LIGHT_BOLD}Cleaning installations and binary${END_COLOUR}"
 	go clean
-	rm -f ${OUTPUT_BINARY}
-
+	rm -f ${OUTPUT_BINARY} ${OUTPUT_BINARY}.exe
+	rm -rf ${TEST_DIR}
 re: clean all
