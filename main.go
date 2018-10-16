@@ -80,12 +80,9 @@ func sortFilesNumerically(files []os.FileInfo) {
 		a, b = processFileNameForNumericSort(a, b)
 		for i := 0; i < len(a) && i < len(b); i++ {
 			if a[i] != b[i] {
-				aInt, err := strconv.Atoi(a[i:])
-				if err != nil {
-					return a < b
-				}
-				bInt, err := strconv.Atoi(b[i:])
-				if err != nil {
+				aInt, aErr := strconv.Atoi(a[i:])
+				bInt, bErr := strconv.Atoi(b[i:])
+				if aErr != nil || bErr != nil {
 					return a < b
 				}
 				return aInt < bInt
