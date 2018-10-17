@@ -40,14 +40,6 @@ func checkPathIsDir(path string) *os.File {
 	return dir
 }
 
-func constructNewName(num int, oldName, renameValue string) string {
-	split := strings.SplitN(oldName, ".", 2)
-	if len(split) == 1 {
-		return renameValue + "_" + strconv.Itoa(num)
-	}
-	return renameValue + "_" + strconv.Itoa(num) + "." + split[1]
-}
-
 func removeExecutableFromList(files []os.FileInfo) []os.FileInfo {
 	exe, err := os.Open(os.Args[0])
 	defer exe.Close()
@@ -100,6 +92,14 @@ func getFilesInDirectory(dir *os.File) []os.FileInfo {
 	files = removeExecutableFromList(files)
 	sortFilesNumerically(files)
 	return files
+}
+
+func constructNewName(num int, oldName, renameValue string) string {
+	split := strings.SplitN(oldName, ".", 2)
+	if len(split) == 1 {
+		return renameValue + "_" + strconv.Itoa(num)
+	}
+	return renameValue + "_" + strconv.Itoa(num) + "." + split[1]
 }
 
 func renameFiles(files []os.FileInfo, path, renameValue string) {
