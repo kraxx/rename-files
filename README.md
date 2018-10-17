@@ -12,7 +12,7 @@ make
 
 If you don't have `make`, install it, it's good.
 
-Give them the binary, tell them to put it in the directory of their desire, rename the binary (keeping the `.exe` extension for Windows OS), and execute it. Renames everything, including directories, to the name of the binary. Does so in smart numerical order. Does not crawl into child directories.
+Give them the binary, tell them to put it in the directory of their desire, rename the binary (keeping the `.exe` extension for Windows OS), and execute it. Renames everything, including directories, to the name of the binary appended with sequentially increasing numbers. Does so in smart numerical order. Does not crawl into child directories.
 
 Has an alternative usage but you can figure it out from the code.
 
