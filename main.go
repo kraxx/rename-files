@@ -21,8 +21,8 @@ func parseArgs(args []string) (path, renameValue string) {
 	case 3: // set path and rename value according to args
 		return strings.TrimRight(args[1], DIR_SEPARATOR), args[2]
 	default:
-		fmt.Fprintln(os.Stderr, "Error: Please provide a [path string] and [rename string]")
-		os.Exit(69)
+		fmt.Fprintln(os.Stderr, "Error: Please provide a [path string] and [rename string]; OR no args")
+		os.Exit(1)
 	}
 	return
 }

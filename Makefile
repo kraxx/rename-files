@@ -4,7 +4,7 @@ OUTPUT_DIR =	./
 OUTPUT_BINARY =	${OUTPUT_DIR}${NAME}
 
 TEST_DIR =		test
-TEST_SCRIPT =	generate20files.sh
+TEST_SCRIPT =	scripts/generate20files.sh
 
 RED =				\033[31m
 GREEN =				\033[32m
@@ -27,10 +27,10 @@ END_COLOUR =		\033[0m
 all: build
 build:
 	echo "${YELLOW_LIGHT_BOLD}Building binary${END_COLOUR}"
-	go build -o ${OUTPUT_BINARY} -ldflags "-X main.version=$(TAG)" .
+	go build -o ${OUTPUT_BINARY} .
 windows:
 	echo "${YELLOW_LIGHT_BOLD}Building binary for ${GREEN_LIGHT_BLINK}WINDOWS${END_COLOUR}"
-	GOOS=windows GOARCH=amd64 go build -o ${OUTPUT_BINARY}.exe -ldflags "-X main.version=$(TAG)" .
+	GOOS=windows GOARCH=amd64 go build -o ${OUTPUT_BINARY}.exe .
 test: build
 	echo "${YELLOW_LIGHT_BOLD}Generating and renaming test files${END_COLOUR}"
 	mkdir -p ${TEST_DIR} && cd ${TEST_DIR} && ../${TEST_SCRIPT} && ../${OUTPUT_BINARY}
